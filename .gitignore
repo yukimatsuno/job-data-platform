@@ -2,3 +2,6 @@
 *.csv
 data/
 
+# macOS system files
+.DS_Store
+
