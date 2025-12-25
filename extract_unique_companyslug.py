@@ -6,5 +6,7 @@ if 'companySlug' not in df.columns:
 else:
     unique_slugs = df['companySlug'].dropna().unique()
     print(f"Unique companySlug count: {len(unique_slugs)}")
-    print("Sample slugs:")
-    print(unique_slugs[:10])
+    
+    # すべての companySlug をCSVファイルに保存
+    pd.DataFrame({'companySlug': unique_slugs}).to_csv('companyslugs.csv', index=False)
+    print("All unique companySlugs written to companyslugs.csv")
