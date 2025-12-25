@@ -5,3 +5,7 @@ data/
 # macOS system files
 .DS_Store
 
+
+# Jupyter notebook
+01_herp_scraper.ipynb
+
