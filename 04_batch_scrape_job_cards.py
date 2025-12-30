@@ -46,6 +46,7 @@ def extract_text_from_class(url: str) -> str:
     return ""
 
 def atomic_write_json(path: str, data):
+    import os
     """
     JSONデータを一時ファイル経由で安全に書き込み、途中停止でもファイルが壊れないように保存
     """
