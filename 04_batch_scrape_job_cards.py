@@ -125,7 +125,7 @@ def process_job_cards(input_csv: str, output_json: str, delay: float = 1.0, max_
         print("Final save completed")
 
 if __name__ == "__main__":
-    process_all = False  # True：全件、False：サンプル
+    process_all = True  # True：全件、False：サンプル
     input_path = '03_company_jobs.csv'
 
     if process_all:
