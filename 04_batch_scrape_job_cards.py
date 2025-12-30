@@ -3,17 +3,16 @@ import time
 import traceback
 from pathlib import Path
 
-# --- extract_text_from_class 関数をこのファイル内に直接定義 ---
 import requests
 from bs4 import BeautifulSoup
 
 def extract_text_from_class(url: str) -> str:
     """
-    Extracts all text content from the first element with the given class name on the page at the specified URL.
-    Args:
-        url (str): The URL of the web page.
-    Returns:
-        str: The extracted text content, or an empty string if not found.
+    指定したURLのページから、対象要素内のテキスト内容をすべて抽出します。
+    引数:
+        url (str): 対象となるWebページのURL
+    戻り値:
+        str: 抽出したテキスト内容。対象要素が見つからない場合は空文字列を返します。
     """
     response = requests.get(url, timeout=30)
     response.raise_for_status()
@@ -47,21 +46,23 @@ def extract_text_from_class(url: str) -> str:
     return ""
 
 def atomic_write_json(path: str, data):
-    """Write JSON safely (prevents partial/corrupt files on crash)."""
+    """
+    JSONデータを一時ファイル経由で安全に書き込み、途中停止でもファイルが壊れないように保存
+    """
     tmp_path = path + ".tmp"
     with open(tmp_path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     os.replace(tmp_path, path)
 
 def append_jsonl(path: str, obj: dict):
-    """Append one JSON object per line (valid for incremental logging)."""
+    """1行ごとに1つのJSONオブジェクトを追記"""
     with open(path, "a", encoding="utf-8") as f:
         f.write(json.dumps(obj, ensure_ascii=False) + "\n")
 
 def process_job_cards(input_csv: str, output_json: str, delay: float = 1.0, max_rows: int = None):
     """
-    Processes job card URLs in batches, saves results after each batch, and logs errors.
-    Args:
+    求人カードのURLをバッチ処理し、各バッチごとに結果を保存し、エラーも記録。
+    引数:
         input_csv (str): 求人URL一覧のCSV
         output_json (str): 抽出した本文を保存するJSON
         delay (float): URL間の待ち時間
@@ -107,7 +108,7 @@ def process_job_cards(input_csv: str, output_json: str, delay: float = 1.0, max_
             results.append({"url": url, "text": text})
             seen_urls.add(url)
 
-            # Save after EACH URL
+            # 毎回保存
             atomic_write_json(output_json, results)
 
         except Exception as e:
