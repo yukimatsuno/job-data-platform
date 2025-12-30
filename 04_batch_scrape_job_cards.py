@@ -1,8 +1,10 @@
+
+import os
 import csv
+import json
 import time
 import traceback
 from pathlib import Path
-
 import requests
 from bs4 import BeautifulSoup
 
@@ -23,20 +25,16 @@ def extract_text_from_class(url: str) -> str:
         elem = soup.find(id=id_name)
         if not elem:
             continue
-        
         # job-match-analysisを含む子要素を除外
         job_match = elem.find(id="job-match-analysis")
         if job_match:
             job_match.extract()
-
         # company-overview内の特定divを除外
         if id_name == "company-overview":
             exclude_div = elem.find('div', class_="flex flex-col gap-4")
             if exclude_div:
                 exclude_div.extract()
-
         texts.append(elem.get_text(separator='\n', strip=True))
-
     # 更新日時のテキストを抽出
     update_elems = soup.find_all('p', class_="scroll-m-20 text-sm text-pretty text-gray-600")
     for elem in update_elems:
@@ -46,7 +44,6 @@ def extract_text_from_class(url: str) -> str:
     return ""
 
 def atomic_write_json(path: str, data):
-    import os
     """
     JSONデータを一時ファイル経由で安全に書き込み、途中停止でもファイルが壊れないように保存
     """
@@ -69,8 +66,6 @@ def process_job_cards(input_csv: str, output_json: str, delay: float = 1.0, max_
         delay (float): URL間の待ち時間
         max_rows (int): 処理件数制限（サンプル用）
     """
-    import os
-    import json
     results = []
     seen_urls = set()
     
@@ -91,6 +86,9 @@ def process_job_cards(input_csv: str, output_json: str, delay: float = 1.0, max_
     with open(input_csv, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         rows = list(reader)
+    # サンプル用。max_rowsが指定されていれば先頭max_rows件のみ処理
+    if max_rows is not None:
+        rows = rows[:max_rows]
 
     total = len(rows)
     for idx, row in enumerate(rows, start=1):
@@ -128,8 +126,6 @@ def process_job_cards(input_csv: str, output_json: str, delay: float = 1.0, max_
 
 if __name__ == "__main__":
     process_all = False  # True：全件、False：サンプル
-    import json
-    import csv
     input_path = '03_company_jobs.csv'
 
     if process_all:
