@@ -120,6 +120,11 @@ def process_job_cards(input_csv: str, output_json: str, delay: float = 1.0, max_
 
         time.sleep(delay)
 
+    # 最終保存
+    if results:
+        atomic_write_json(output_json, results)
+        print("Final save completed")
+
 if __name__ == "__main__":
     process_all = False  # True：全件、False：サンプル
     import json
