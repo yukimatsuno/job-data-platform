@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ job.job_title_raw }}</title>
+</head>
+<body>
+    <a href="/">← 一覧に戻る</a>
+
+    <h1>{{ job.job_title_raw }}</h1>
+    <h2>{{ job.company_name }}</h2>
+
+    <p>{{ job.job_summary_ja }}</p>
+
+    <h3>仕事内容</h3>
+    <p>{{ job.job_description_ja }}</p>
+
+    <h3>条件</h3>
+    <ul>
+        <li>雇用形態：{{ job.employment_type }}</li>
+        <li>リモート：{{ job.remote_type }}</li>
+        <li>年収：{{ job.salary.min }} 〜 {{ job.salary.max }} 万円</li>
+    </ul>
+
+    {% if job.company_website_url %}
+        <p>
+            <a href="{{ job.company_website_url }}" target="_blank">
+                企業サイト
+            </a>
+        </p>
+    {% endif %}
+</body>
+</html>

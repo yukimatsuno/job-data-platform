@@ -2,6 +2,10 @@ from fastapi import FastAPI
 from app.db import collection
 from bson import ObjectId
 from fastapi import HTTPException
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi import Request
+
 
 app = FastAPI()
 
@@ -44,3 +48,36 @@ def get_job_detail(job_id: str):
     doc["_id"] = str(doc["_id"])
 
     return doc
+
+
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/", response_class=HTMLResponse)
+def show_jobs(request: Request):
+    cursor = collection.find().limit(10)
+    jobs = []
+
+    for doc in cursor:
+        doc["_id"] = str(doc["_id"])
+        jobs.append(doc)
+
+    return templates.TemplateResponse(
+        "jobs.html",
+        {"request": request, "jobs": jobs},
+    )
+
+@app.get("/job/{job_id}", response_class=HTMLResponse)
+def show_job_detail(request: Request, job_id: str):
+    if not ObjectId.is_valid(job_id):
+        return HTMLResponse("Invalid job id", status_code=400)
+
+    doc = collection.find_one({"_id": ObjectId(job_id)})
+    if not doc:
+        return HTMLResponse("Job not found", status_code=404)
+
+    doc["_id"] = str(doc["_id"])
+
+    return templates.TemplateResponse(
+        "job_detail.html",
+        {"request": request, "job": doc},
+    )
