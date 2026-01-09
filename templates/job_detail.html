@@ -1,33 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>{{ job.job_title_raw }}</title>
+    <title>{{ job.job_title_raw }} | {{ job.company_name }}</title>
 </head>
 <body>
-    <a href="/">← 一覧に戻る</a>
 
+    <!-- 一覧に戻る -->
+    <p>
+        <a href="/">← 求人一覧に戻る</a>
+    </p>
+
+    <!-- タイトル -->
     <h1>{{ job.job_title_raw }}</h1>
     <h2>{{ job.company_name }}</h2>
 
-    <p>{{ job.job_summary_ja }}</p>
+    <!-- サマリー -->
+    <p>
+        {{ job.job_summary_ja }}
+    </p>
 
-    <h3>仕事内容</h3>
-    <p>{{ job.job_description_ja }}</p>
-
-    <h3>条件</h3>
+    <!-- 基本情報 -->
+    <h3>基本情報</h3>
     <ul>
+        <li>職種カテゴリ：{{ job.job_category }}</li>
+        <li>職種ロール：{{ job.job_role }}</li>
         <li>雇用形態：{{ job.employment_type }}</li>
-        <li>リモート：{{ job.remote_type }}</li>
-        <li>年収：{{ job.salary.min }} 〜 {{ job.salary.max }} 万円</li>
+        <li>リモート勤務：{{ job.remote_type }}</li>
+        <li>
+            年収：
+            {{ job.salary.min }} 〜 {{ job.salary.max }} 万円
+            {% if job.salary.note %}
+                （{{ job.salary.note }}）
+            {% endif %}
+        </li>
     </ul>
 
-    {% if job.company_website_url %}
+    <!-- 勤務地 -->
+    <h3>勤務地</h3>
+    {% if job.work_location.type == "フルリモート" %}
+        <p>フルリモート</p>
+    {% else %}
         <p>
-            <a href="{{ job.company_website_url }}" target="_blank">
-                企業サイト
+            {{ job.work_location.type }}
+            {% if job.work_location.detail %}
+                ：{{ job.work_location.detail }}
+            {% endif %}
+        </p>
+    {% endif %}
+
+    <!-- 仕事内容 -->
+    <h3>仕事内容</h3>
+    <p>
+        {{ job.job_description_ja }}
+    </p>
+
+    <!-- 使用技術 -->
+    <h3>使用技術</h3>
+    <ul>
+        {% for tech in job.technologies %}
+            <li>{{ tech }}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- 企業サイト -->
+    {% if job.company_website_url %}
+        <h3>企業情報</h3>
+        <p>
+            <a href="{{ job.company_website_url }}" target="_blank" rel="noopener">
+                企業公式サイト
             </a>
         </p>
     {% endif %}
+
 </body>
 </html>
