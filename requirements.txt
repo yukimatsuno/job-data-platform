@@ -3,3 +3,4 @@ uvicorn
 pymongo
 dnspython
 jinja2
+python-dotenv
