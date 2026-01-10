@@ -9,7 +9,6 @@ from app.db import collection
 
 app = FastAPI()
 
-# ★ これが必要（抜けていた）
 templates = Jinja2Templates(directory="templates")
 
 
@@ -19,8 +18,8 @@ def hello():
 
 
 @app.get("/", response_class=HTMLResponse)
-def show_jobs(request: Request):
-    cursor = collection.find().limit(10)
+def show_jobs(request: Request, limit: int = 10):
+    cursor = collection.find().sort("_id", -1).limit(limit)
     jobs = []
 
     for doc in cursor:
