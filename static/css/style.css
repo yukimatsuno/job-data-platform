@@ -1,0 +1,41 @@
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 24px;
+}
+
+.page-title {
+    font-size: 22px;
+    margin-bottom: 24px;
+}
+
+.job-list {
+    list-style: none;
+    padding: 0;
+}
+
+.job-item {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.job-link {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.job-link:hover {
+    text-decoration: underline;
+}
+
+.job-meta {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #555;
+}

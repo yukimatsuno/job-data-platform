@@ -3,24 +3,30 @@
 <head>
     <meta charset="utf-8">
     <title>Job List</title>
+
+    <!-- ★ CSSを読み込む -->
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 
-    <h1>求人一覧</h1>
+    <h1 class="page-title">求人一覧</h1> <!-- ★ class追加 -->
 
-    <ul>
+    <ul class="job-list"> <!-- ★ class追加 -->
         {% for job in jobs %}
-            <li>
+            <li class="job-item"> <!-- ★ class追加 -->
+
                 <!-- 求人詳細ページへのリンク -->
-                <a href="/job/{{ job._id }}">
+                <a class="job-link" href="/job/{{ job._id }}">
                     {{ job.job_title_raw }} / {{ job.company_name }}
                 </a>
-                <br>
 
                 <!-- 補足情報 -->
-                カテゴリ：{{ job.job_category }} |
-                リモート：{{ job.remote_type }} |
-                年収：{{ job.salary.min }} 〜 {{ job.salary.max }} 万円
+                <div class="job-meta">
+                    カテゴリ：{{ job.job_category }} |
+                    リモート：{{ job.remote_type }} |
+                    年収：{{ job.salary.min }} 〜 {{ job.salary.max }} 万円
+                </div>
+
             </li>
         {% endfor %}
     </ul>
