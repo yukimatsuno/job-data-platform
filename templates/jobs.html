@@ -116,9 +116,12 @@
                     </a>
                     <!-- 補足情報 -->
                     <div class="job-meta">
-                        カテゴリ：{{ job.job_category }} |
-                        リモート：{{ job.remote_type }} |
-                        年収：{{ job.salary.min }} 〜 {{ job.salary.max }} 万円
+                        カテゴリ：{{ job.job_category or '未設定' }} |
+                        リモート：{{ job.remote_type or '未設定' }} |
+                        年収：
+                        {{ job.salary.min if job.salary and job.salary.min else '未設定' }}
+                        〜
+                        {{ job.salary.max if job.salary and job.salary.max else '未設定' }} 万円
                     </div>
                 </li>
             {% endfor %}

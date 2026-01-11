@@ -16,14 +16,16 @@
             </div>
             <h3>基本情報</h3>
             <ul>
-                <li>職種カテゴリ：{{ job.job_category }}</li>
-                <li>職種ロール：{{ job.job_role }}</li>
-                <li>雇用形態：{{ job.employment_type }}</li>
-                <li>リモート勤務：{{ job.remote_type }}</li>
+                <li>職種カテゴリ：{{ job.job_category or '未設定' }}</li>
+                <li>職種ロール：{{ job.job_role or '未設定' }}</li>
+                <li>雇用形態：{{ job.employment_type or '未設定' }}</li>
+                <li>リモート勤務：{{ job.remote_type or '未設定' }}</li>
                 <li>
                     年収：
-                    {{ job.salary.min }} 〜 {{ job.salary.max }} 万円
-                    {% if job.salary.note %}
+                    {{ job.salary.min if job.salary and job.salary.min else '未設定' }}
+                    〜
+                    {{ job.salary.max if job.salary and job.salary.max else '未設定' }} 万円
+                    {% if job.salary and job.salary.note %}
                         （{{ job.salary.note }}）
                     {% endif %}
                 </li>
