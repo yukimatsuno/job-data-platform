@@ -172,8 +172,8 @@ if os.path.exists(OUTPUT_FILE):
 
 # ===== メインループ =====
 for idx, job in enumerate(jobs, 1):
-    if idx > 10: #テスト用。10件まで。
-        break
+    if idx > 50: #テスト用。50件まで。
+        break #テスト用。50件まで。
 
     url = job.get("url")
 

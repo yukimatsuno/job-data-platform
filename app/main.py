@@ -23,7 +23,7 @@ def hello():
 @app.get("/", response_class=HTMLResponse)
 def show_jobs(
     request: Request,
-    limit: int = 10,
+    limit: int = 50,
     q: Optional[str] = None,
     job_category: Optional[str] = None,
     employment_type: Optional[str] = None,
