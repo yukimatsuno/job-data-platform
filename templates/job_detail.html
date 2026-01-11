@@ -3,9 +3,22 @@
 <head>
     <meta charset="utf-8">
     <title>{{ job.job_title_raw }} | {{ job.company_name }}</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+    <header style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
+        <div style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+            <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="19" cy="19" r="16" fill="#fff" stroke="#e6007e" stroke-width="3"/>
+                <circle cx="19" cy="19" r="10" fill="#e6007e"/>
+                <text x="19" y="25" text-anchor="middle" font-size="18" font-family="'Segoe UI', 'Noto Sans JP', 'Roboto', sans-serif" fill="#fff" font-weight="bold" letter-spacing="0.04em">J</text>
+            </svg>
+        </div>
+        <h1 class="page-title" style="margin:0;font-size:1.6em;letter-spacing:0.02em;color:#e6007e;">
+            <a href="/" style="color:inherit; text-decoration:none;">Japan Job Portal</a>
+        </h1>
+    </header>
     <h1 class="page-title">{{ job.job_title_raw }}</h1>
     <h2>{{ job.company_name }}</h2>
     <a href="/" style="display:inline-block;margin-bottom:16px;">← 求人一覧に戻る</a>

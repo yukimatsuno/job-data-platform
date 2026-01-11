@@ -3,12 +3,22 @@
 <head>
     <meta charset="utf-8">
     <title>Job List</title>
-
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-
-    <h1 class="page-title"><a href="/" style="color:inherit; text-decoration:none;">求人一覧</a></h1>
+    <header style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
+        <div style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+            <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="19" cy="19" r="16" fill="#fff" stroke="#e6007e" stroke-width="3"/>
+                <circle cx="19" cy="19" r="10" fill="#e6007e"/>
+                <text x="19" y="25" text-anchor="middle" font-size="18" font-family="'Segoe UI', 'Noto Sans JP', 'Roboto', sans-serif" fill="#fff" font-weight="bold" letter-spacing="0.04em">J</text>
+            </svg>
+        </div>
+        <h1 class="page-title" style="margin:0;font-size:1.6em;letter-spacing:0.02em;color:#e6007e;">
+            <a href="/" style="color:inherit; text-decoration:none;">Japan Job Portal</a>
+        </h1>
+    </header>
 
     <form method="get" action="/" style="margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
         <input type="text" name="q" placeholder="キーワードで検索 (職種・会社名)" value="{{ request.query_params.q or '' }}" style="flex:1 1 200px; padding:0.5em; border-radius:6px; border:1px solid #ccc; font-size:1em; min-width:180px;">
@@ -109,12 +119,10 @@
                     <span class="job-company">{{ job.company_name }}</span>
                 </div>
                 <div class="job-card-meta">
-                    <span class="job-location">{{ job.work_location.type or '勤務地未設定' }}</span>
-                    <span class="job-remote">{{ job.remote_type or '未設定' }}</span>
-                    <span class="job-employment">{{ job.employment_type or '未設定' }}</span>
-                </div>
-                <div class="job-card-salary">
-                    年収：{{ job.salary.min if job.salary and job.salary.min else '未設定' }}〜{{ job.salary.max if job.salary and job.salary.max else '未設定' }}万円
+                    <span class="job-label">勤務地:</span> <span class="job-location">{{ job.work_location.type or '勤務地未設定' }}</span><br>
+                    <span class="job-label">リモート勤務:</span> <span class="job-remote">{{ job.remote_type or '未設定' }}</span><br>
+                    <span class="job-label">雇用形態:</span> <span class="job-employment">{{ job.employment_type or '未設定' }}</span><br>
+                    <span class="job-label">年収:</span> <span class="job-card-salary">{{ job.salary.min if job.salary and job.salary.min else '未設定' }}〜{{ job.salary.max if job.salary and job.salary.max else '未設定' }}万円</span>
                 </div>
                 <div class="job-card-summary">
                     {{ job.job_summary_ja or '' }}
