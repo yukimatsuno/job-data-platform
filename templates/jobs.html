@@ -4,16 +4,20 @@
     <meta charset="utf-8">
     <title>Job List</title>
 
-    <!-- ★ CSSを読み込む -->
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 
-    <h1 class="page-title">求人一覧</h1> <!-- ★ class追加 -->
+    <h1 class="page-title">求人一覧</h1>
 
-    <ul class="job-list"> <!-- ★ class追加 -->
+    <form method="get" action="/" style="margin-bottom: 24px; display: flex; gap: 8px; align-items: center;">
+        <input type="text" name="q" placeholder="キーワードで検索 (職種・会社名)" value="{{ request.query_params.q or '' }}" style="flex:1; padding:0.5em; border-radius:6px; border:1px solid #ccc; font-size:1em;">
+        <button type="submit" class="job-link" style="padding:0.5em 1.2em; border-radius:6px; border:none; background:#0066cc; color:#fff; font-weight:600; cursor:pointer;">検索</button>
+    </form>
+
+    <ul class="job-list"> 
         {% for job in jobs %}
-            <li class="job-item"> <!-- ★ class追加 -->
+            <li class="job-item"> 
 
                 <!-- 求人詳細ページへのリンク -->
                 <a class="job-link" href="/job/{{ job._id }}">

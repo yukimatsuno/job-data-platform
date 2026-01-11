@@ -1,3 +1,4 @@
+
 from fastapi import FastAPI
 from fastapi import Request
 from fastapi.responses import HTMLResponse
@@ -5,6 +6,7 @@ from fastapi.templating import Jinja2Templates
 from bson import ObjectId
 from app.db import collection
 from fastapi.staticfiles import StaticFiles
+from typing import Optional
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -17,15 +19,23 @@ def hello():
     return {"message": "Hello FastAPI"}
 
 
-@app.get("/", response_class=HTMLResponse)
-def show_jobs(request: Request, limit: int = 10):
-    cursor = collection.find().sort("_id", -1).limit(limit)
-    jobs = []
 
+@app.get("/", response_class=HTMLResponse)
+def show_jobs(request: Request, limit: int = 10, q: Optional[str] = None):
+    query = {}
+    if q:
+        # Search in job_title_raw or company_name (case-insensitive, partial match)
+        query = {
+            "$or": [
+                {"job_title_raw": {"$regex": q, "$options": "i"}},
+                {"company_name": {"$regex": q, "$options": "i"}}
+            ]
+        }
+    cursor = collection.find(query).sort("_id", -1).limit(limit)
+    jobs = []
     for doc in cursor:
         doc["_id"] = str(doc["_id"])
         jobs.append(doc)
-
     return templates.TemplateResponse(
         "jobs.html",
         {"request": request, "jobs": jobs},
