@@ -49,7 +49,16 @@ def show_jobs(
     if employment_type:
         and_conditions.append({"employment_type": employment_type})
     if remote_type:
-        and_conditions.append({"remote_type": remote_type})
+        if remote_type == "未設定":
+            and_conditions.append({
+                "$or": [
+                    {"remote_type": {"$in": [None, "", "未設定"]}},
+                    {"remote_type": None},
+                    {"remote_type": {"$exists": False}}
+                ]
+            })
+        else:
+            and_conditions.append({"remote_type": remote_type})
     if work_location:
         # work_location.type or work_location.detail どちらかに一致
         and_conditions.append({

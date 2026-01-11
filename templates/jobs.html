@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <h1 class="page-title">求人一覧</h1>
+    <h1 class="page-title"><a href="/" style="color:inherit; text-decoration:none;">求人一覧</a></h1>
 
     <form method="get" action="/" style="margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
         <input type="text" name="q" placeholder="キーワードで検索 (職種・会社名)" value="{{ request.query_params.q or '' }}" style="flex:1 1 200px; padding:0.5em; border-radius:6px; border:1px solid #ccc; font-size:1em; min-width:180px;">
@@ -37,6 +37,7 @@
 
         <select name="remote_type" style="flex:1 1 110px; min-width:110px; padding:0.5em; border-radius:6px; border:1px solid #ccc;">
             <option value="">リモート勤務</option>
+            <option value="未設定" {% if request.query_params.remote_type=='未設定' %}selected{% endif %}>未設定</option>
             <option value="フルリモート" {% if request.query_params.remote_type=='フルリモート' %}selected{% endif %}>フルリモート</option>
             <option value="一部リモート" {% if request.query_params.remote_type=='一部リモート' %}selected{% endif %}>一部リモート</option>
             <option value="出社" {% if request.query_params.remote_type=='出社' %}selected{% endif %}>出社</option>
@@ -97,32 +98,32 @@
         <button type="submit" class="job-link" style="padding:0.5em 1.2em; border-radius:6px; border:none; background:#0066cc; color:#fff; font-weight:600; cursor:pointer;">検索</button>
     </form>
 
-    <ul class="job-list"> 
-        {% for job in jobs %}
-            <li class="job-item"> 
-
-                <!-- 求人詳細ページへのリンク -->
-
-                <a class="job-link" href="/job/{{ job._id }}">
-                    {{ job.job_title_raw }} / {{ job.company_name }}
-                </a>
-                <a href="/job/{{ job._id }}" target="_blank" title="新しいタブで開く" style="margin-left:8px; vertical-align:middle; display:inline-block;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" style="vertical-align:middle;">
-                        <path d="M7 4C7 2.89543 7.89543 2 9 2H16C17.1046 2 18 2.89543 18 4V11C18 12.1046 17.1046 13 16 13H15V11H16V4H9V5H7V4Z" fill="#0066cc"/>
-                        <path d="M13 7H4V16H13V7ZM4 5C2.89543 5 2 5.89543 2 7V16C2 17.1046 2.89543 18 4 18H13C14.1046 18 15 17.1046 15 16V7C15 5.89543 14.1046 5 13 5H4Z" fill="#0066cc"/>
-                    </svg>
-                </a>
-
-                <!-- 補足情報 -->
-                <div class="job-meta">
-                    カテゴリ：{{ job.job_category }} |
-                    リモート：{{ job.remote_type }} |
-                    年収：{{ job.salary.min }} 〜 {{ job.salary.max }} 万円
-                </div>
-
-            </li>
-        {% endfor %}
-    </ul>
+    {% if jobs|length == 0 %}
+        <div style="margin: 32px 0; color: #c00; font-size: 1.1em; text-align: center;">該当する求人が見つかりませんでした。</div>
+    {% else %}
+        <ul class="job-list"> 
+            {% for job in jobs %}
+                <li class="job-item"> 
+                    <!-- 求人詳細ページへのリンク -->
+                    <a class="job-link" href="/job/{{ job._id }}">
+                        {{ job.job_title_raw }} / {{ job.company_name }}
+                    </a>
+                    <a href="/job/{{ job._id }}" target="_blank" title="新しいタブで開く" style="margin-left:8px; vertical-align:middle; display:inline-block;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" style="vertical-align:middle;">
+                            <path d="M7 4C7 2.89543 7.89543 2 9 2H16C17.1046 2 18 2.89543 18 4V11C18 12.1046 17.1046 13 16 13H15V11H16V4H9V5H7V4Z" fill="#0066cc"/>
+                            <path d="M13 7H4V16H13V7ZM4 5C2.89543 5 2 5.89543 2 7V16C2 17.1046 2.89543 18 4 18H13C14.1046 18 15 17.1046 15 16V7C15 5.89543 14.1046 5 13 5H4Z" fill="#0066cc"/>
+                        </svg>
+                    </a>
+                    <!-- 補足情報 -->
+                    <div class="job-meta">
+                        カテゴリ：{{ job.job_category }} |
+                        リモート：{{ job.remote_type }} |
+                        年収：{{ job.salary.min }} 〜 {{ job.salary.max }} 万円
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
 </body>
 </html>
