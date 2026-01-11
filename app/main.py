@@ -21,16 +21,66 @@ def hello():
 
 
 @app.get("/", response_class=HTMLResponse)
-def show_jobs(request: Request, limit: int = 10, q: Optional[str] = None):
+def show_jobs(
+    request: Request,
+    limit: int = 10,
+    q: Optional[str] = None,
+    job_category: Optional[str] = None,
+    employment_type: Optional[str] = None,
+    remote_type: Optional[str] = None,
+    work_location: Optional[str] = None,
+    salary_min: Optional[str] = None,
+    salary_max: Optional[str] = None,
+    employee_count: Optional[str] = None,
+):
     query = {}
+    and_conditions = []
     if q:
-        # Search in job_title_raw or company_name (case-insensitive, partial match)
-        query = {
+        and_conditions.append({
             "$or": [
                 {"job_title_raw": {"$regex": q, "$options": "i"}},
-                {"company_name": {"$regex": q, "$options": "i"}}
+                {"company_name": {"$regex": q, "$options": "i"}},
+                {"job_category": {"$regex": q, "$options": "i"}},
+                {"job_role": {"$regex": q, "$options": "i"}}
             ]
-        }
+        })
+    if job_category:
+        and_conditions.append({"job_category": job_category})
+    if employment_type:
+        and_conditions.append({"employment_type": employment_type})
+    if remote_type:
+        and_conditions.append({"remote_type": remote_type})
+    if work_location:
+        # work_location.type or work_location.detail どちらかに一致
+        and_conditions.append({
+            "$or": [
+                {"work_location.type": work_location},
+                {"work_location.detail": {"$regex": work_location, "$options": "i"}}
+            ]
+        })
+    if salary_min and salary_min != "":
+        try:
+            salary_min_int = int(salary_min)
+            and_conditions.append({"salary.min": {"$gte": salary_min_int}})
+        except Exception:
+            pass
+    if salary_max and salary_max != "":
+        try:
+            salary_max_int = int(salary_max)
+            and_conditions.append({"salary.max": {"$lte": salary_max_int}})
+        except Exception:
+            pass
+    if employee_count:
+        # employee_count is like '100-299', '5000-', etc.
+        if '-' in employee_count:
+            parts = employee_count.split('-')
+            if parts[1] == '':
+                # 5000- (5000人以上)
+                and_conditions.append({"employee_count": {"$gte": int(parts[0])}})
+            else:
+                and_conditions.append({"employee_count": {"$gte": int(parts[0]), "$lte": int(parts[1])}})
+    if and_conditions:
+        query = {"$and": and_conditions}
     cursor = collection.find(query).sort("_id", -1).limit(limit)
     jobs = []
     for doc in cursor:
