@@ -20,6 +20,11 @@
         </h1>
     </header>
     <main style="max-width:700px;margin:0 auto;">
+        <div style="text-align:right; margin-bottom:1em;">
+            <button id="btn-ja" class="btn btn-outline-primary btn-sm" type="button">日本語</button>
+            <button id="btn-en" class="btn btn-outline-secondary btn-sm" type="button">English</button>
+        </div>
+        <div id="about-ja">
         <h2>このプロジェクトについて</h2>
         <section style="margin-bottom:2em;">
             <h3>自己紹介</h3>
@@ -63,6 +68,69 @@
                 ご覧いただき、誠にありがとうございます。
             </p>
         </section>
+        </div>
+        <div id="about-en" style="display:none;">
+        <h2>About This Project</h2>
+        <section style="margin-bottom:2em;">
+            <h3>Who am I?</h3>
+            <p>
+                <strong>Yuki</strong><br>
+                Software Engineer / Data Scientist<br>
+                <a href="mailto:your.email@example.com">your.email@example.com</a>
+            </p>
+        </section>
+        <section style="margin-bottom:2em;">
+            <h3>Why did I build this?</h3>
+            <p>
+                I created this job portal to empower people seeking tech careers in Japan with more opportunities and information. My goal is to make it easy to search and compare high-quality jobs, including those not listed on major sites, and to showcase my skills in scraping, data processing, and web development.
+            </p>
+        </section>
+        <section style="margin-bottom:2em;">
+            <h3>My Working Approach</h3>
+            <ul>
+                <li><strong>Data-driven</strong>: Collecting and analyzing real job data to deliver value to users</li>
+                <li><strong>User-focused</strong>: Simple, fast, and mobile-friendly UI/UX</li>
+                <li><strong>Automation</strong>: Python-based scraping, data cleaning, and API design</li>
+                <li><strong>Transparency</strong>: Documented code and data processing for reproducibility</li>
+                <li><strong>Modern Tech</strong>: FastAPI, MongoDB, Jinja2, Bootstrap, and more</li>
+            </ul>
+        </section>
+        <section style="margin-bottom:2em;">
+            <h3>Highlights</h3>
+            <ul>
+                <li>Full ownership from requirements to deployment</li>
+                <li>Full-stack: data collection, cleaning, API, and UI</li>
+                <li>Performance, maintainability, and scalability in mind</li>
+                <li>UI design with Japanese/English support</li>
+                <li>Version control and CI/CD with Git/GitHub</li>
+            </ul>
+        </section>
+        <section>
+            <h3>Contact</h3>
+            <p>
+                For questions, suggestions, or collaboration, feel free to contact me at the email above.<br>
+                Thank you for visiting!
+            </p>
+        </section>
+        </div>
     </main>
+    <script>
+    document.getElementById('btn-ja').onclick = function() {
+        document.getElementById('about-ja').style.display = '';
+        document.getElementById('about-en').style.display = 'none';
+        this.classList.add('btn-primary');
+        this.classList.remove('btn-outline-primary');
+        document.getElementById('btn-en').classList.remove('btn-primary');
+        document.getElementById('btn-en').classList.add('btn-outline-secondary');
+    };
+    document.getElementById('btn-en').onclick = function() {
+        document.getElementById('about-ja').style.display = 'none';
+        document.getElementById('about-en').style.display = '';
+        this.classList.add('btn-primary');
+        this.classList.remove('btn-outline-secondary');
+        document.getElementById('btn-ja').classList.remove('btn-primary');
+        document.getElementById('btn-ja').classList.add('btn-outline-primary');
+    };
+    </script>
 </body>
 </html>
