@@ -5,6 +5,9 @@
     <title>About | Japan Job Portal</title>
     <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
     <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Mermaid.js CDN for flowchart rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
 </head>
 <body>
     <header style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
@@ -25,6 +28,38 @@
             <button id="btn-en" class="btn btn-outline-secondary btn-sm" type="button">English</button>
         </div>
         <div id="about-ja">
+                        <section style="margin-bottom:2em;">
+                            <h3>ざっくり開発プロセス</h3>
+                            <ol>
+                                <li>要件整理・理想のジョブボード像をイメージ</li>
+                                <li>Pythonで求人データのスクレイピング・整形</li>
+                                <li>大量データの安定収集・エラー対策を工夫</li>
+                                <li>MongoDBにデータ保存</li>
+                                <li>FastAPIでAPI・Webアプリ構築</li>
+                                <li>Jinja2＋BootstrapでUI作成・デザイン</li>
+                                <li>CSSでUIを見やすく整備・モバイル対応</li>
+                                <li>検索フィルター機能を拡充</li>
+                                <li>Azure FoundryのLLMで求人要約・分類</li>
+                                <li>Azure App Serviceでデプロイ・運用</li>
+                            </ol>
+                            <div style="margin-top:1.5em;">
+                                <h4>開発フロー（チャート例）</h4>
+                                                                <!-- Mermaid.js chart -->
+                                                                <pre class="mermaid" style="background:#f8f9fa;padding:1em;border-radius:8px;">
+flowchart TD
+        A[要件整理] --> B[データ収集・整形]
+        B --> B2[大量データの安定収集・エラー対策]
+        B2 --> C[MongoDB保存]
+        C --> D[FastAPI開発]
+        D --> E[Jinja2/Bootstrap UI]
+        E --> H[CSSでUI整備・モバイル対応]
+        H --> I[検索フィルター拡充]
+        I --> G[Azure Foundry LLM要約・分類]
+        G --> F[Azure App Serviceでデプロイ・運用]
+                                                                </pre>
+                                                                <noscript>※チャート表示にはJavaScript有効化が必要です</noscript>
+                            </div>
+                        </section>
                 <section style="margin-bottom:2em;">
                     <h3>開発ストーリー</h3>
                     <p>
@@ -66,7 +101,9 @@
                 <li>要件定義から設計・実装・運用まで一貫して担当</li>
                 <li>データ収集・クレンジング・API・UIまでフルスタックで対応</li>
                 <li>パフォーマンス・保守性・拡張性を意識した設計</li>
+                <li><b>壊れにくく、プロダクトレベルの品質を意識した堅牢なアプリ設計</b></li>
                 <li>日本語・英語両対応のUI設計も視野に</li>
+                <li><b>Git Pushで自動的に本番環境へ反映されるCI/CDパイプラインを構築</b></li>
                 <li>Git/GitHubによるバージョン管理・CI/CDも実践</li>
             </ul>
         </section>
@@ -79,55 +116,73 @@
         </section>
         </div>
         <div id="about-en" style="display:none;">
-                <section style="margin-bottom:2em;">
-                    <h3>My Story</h3>
-                    <p>
-                        While job hunting, I realized how exhausting it is to jump between multiple job boards just to find the right opportunities. I wished there was a single place to search jobs across all platforms.<br>
-                        During this New Year holiday, I decided to take on the challenge and build my own ideal job board from scratch.<br>
-                        Fueled by both technical curiosity and the desire to help others facing the same pain, I rapidly prototyped and launched this site.<br>
-                        <strong>"If you want something, build it yourself."</strong>—That spirit drives this project forward.
-                    </p>
-                </section>
+        <section style="margin-bottom:2em;">
+            <h3>Development Story</h3>
+            <p>
+                When I was job hunting, I found it surprisingly exhausting to jump between multiple job sites, and sometimes I felt a bit overwhelmed. I thought, "If only I could search across various sites in one place, job hunting would be more fun and positive..." That feeling was the start of this project.<br>
+                During the New Year holidays, I decided to take the plunge and build my ideal job board myself.<br>
+                I developed this site with excitement for technology and a desire to help others facing similar challenges.<br>
+                <strong>"Create the future you want with your own hands."</strong>—With that spirit, I will keep evolving this project step by step.
+            </p>
+        </section>
+        <section style="margin-bottom:2em;">
+            <h3>Rough Development Process</h3>
+            <ol>
+                <li>Clarified requirements and envisioned the ideal job board</li>
+                <li>Scraped and processed job data with Python</li>
+                <li>Devised robust methods for stable, large-scale data collection and error handling</li>
+                <li>Saved data to MongoDB</li>
+                <li>Built API and web app with FastAPI</li>
+                <li>Created and designed UI with Jinja2 and Bootstrap</li>
+                <li>Improved UI and mobile experience with CSS</li>
+                <li>Enhanced search filter features</li>
+                <li>Summarized and classified jobs using Azure Foundry LLM</li>
+                <li>Deployed and operated on Azure App Service</li>
+            </ol>
+        </section>
         <h2>About This Project</h2>
         <section style="margin-bottom:2em;">
-            <h3>Who am I?</h3>
+            <h3>About Me</h3>
             <p>
                 <strong>Yuki Matsuno</strong><br>
                 Software Engineer / Data Scientist<br>
-                <a href="https://github.com/yukimatsuno">GitHub profile</a>
+                <a href="https://github.com/yukimatsuno">GitHub Profile</a>
             </p>
         </section>
         <section style="margin-bottom:2em;">
-            <h3>Why did I build this?</h3>
+            <h3>Why I Built This Project</h3>
             <p>
-                I created this job portal to empower people seeking tech careers in Japan with more opportunities and information. My goal is to make it easy to search and compare high-quality jobs, including those not listed on major sites, and to showcase my skills in scraping, data processing, and web development.
+                I developed this job portal to deliver more opportunities and information to people who want to work in Japan's tech industry. I strive to include jobs that are hard to find on major sites and those reflecting the latest work styles.<br>
+                This project is also a place to showcase my comprehensive skills in scraping, data processing, and web development.
             </p>
         </section>
         <section style="margin-bottom:2em;">
-            <h3>My Working Approach</h3>
+            <h3>Development & Work Principles</h3>
             <ul>
-                <li><strong>Data-driven</strong>: Collecting and analyzing real job data to deliver value to users</li>
-                <li><strong>User-focused</strong>: Simple, fast, and mobile-friendly UI/UX</li>
-                <li><strong>Automation</strong>: Python-based scraping, data cleaning, and API design</li>
-                <li><strong>Transparency</strong>: Documented code and data processing for reproducibility</li>
-                <li><strong>Modern Tech</strong>: FastAPI, MongoDB, Jinja2, Bootstrap, and more</li>
+                <li><strong>Data-driven</strong>: Collecting and analyzing real job data to provide valuable information</li>
+                <li><strong>User-centered</strong>: Pursuing simple, fast, and mobile-friendly UI/UX</li>
+                <li><strong>Automation & Efficiency</strong>: Thorough use of Python for scraping, data processing, and API design</li>
+                <li><strong>Transparency & Reproducibility</strong>: Documenting code and data flows for easy verification</li>
+                <li><strong>Modern Tech</strong>: Actively adopting FastAPI, MongoDB, Jinja2, Bootstrap, and more</li>
             </ul>
         </section>
         <section style="margin-bottom:2em;">
             <h3>Highlights</h3>
             <ul>
-                <li>Full ownership from requirements to deployment</li>
+                <li>Handled everything from requirements definition to design, implementation, and operation</li>
                 <li>Full-stack: data collection, cleaning, API, and UI</li>
-                <li>Performance, maintainability, and scalability in mind</li>
+                <li>Designed for performance, maintainability, and scalability</li>
+                <li><b>Robust, product-level app design for high reliability</b></li>
                 <li>UI design with Japanese/English support</li>
+                <li><b>CI/CD pipeline: Git push automatically deploys to production</b></li>
                 <li>Version control and CI/CD with Git/GitHub</li>
             </ul>
         </section>
         <section>
             <h3>Contact</h3>
             <p>
-                For questions, suggestions, or collaboration, feel free to contact me at the email above.<br>
-                Thank you for visiting!
+                For questions, suggestions, or collaboration, please feel free to reach out via GitHub.<br>
+                Thank you very much for visiting!
             </p>
         </section>
         </div>

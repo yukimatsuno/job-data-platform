@@ -1,10 +1,3 @@
-/* --- 強制1カラム化: 900px以下 --- */
-@media (max-width: 900px) {
-  .job-card-grid {
-    grid-template-columns: 1fr !important;
-    /* 競合回避のため!importantを付与 */
-  }
-}
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     background-color: #f7f7f7;
