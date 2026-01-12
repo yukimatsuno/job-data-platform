@@ -5,6 +5,8 @@
     <title>Job List</title>
     <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
     <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <header style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
@@ -21,9 +23,9 @@
     </header>
 
     <form method="get" action="/" style="margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
-        <input type="text" name="q" placeholder="キーワードで検索 (職種・会社名)" value="{{ request.query_params.q or '' }}" style="flex:1 1 200px; padding:0.5em; border-radius:6px; border:1px solid #ccc; font-size:1em; min-width:180px;">
+        <input type="text" name="q" placeholder="キーワードで検索 (職種・会社名)" value="{{ request.query_params.q or '' }}" class="form-control mb-2" style="min-width:180px;">
 
-        <select name="job_category" style="flex:1 1 120px; min-width:120px; padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+        <select name="job_category" class="form-select mb-2" style="min-width:120px;">
             <option value="">職種カテゴリ</option>
             <option value="エンジニア" {% if request.query_params.job_category=='エンジニア' %}selected{% endif %}>エンジニア</option>
             <option value="データ分析活用" {% if request.query_params.job_category=='データ分析活用' %}selected{% endif %}>データ分析活用</option>
@@ -36,7 +38,7 @@
             <option value="その他" {% if request.query_params.job_category=='その他' %}selected{% endif %}>その他</option>
         </select>
 
-        <select name="employment_type" style="flex:1 1 110px; min-width:110px; padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+        <select name="employment_type" class="form-select mb-2" style="min-width:110px;">
             <option value="">雇用形態</option>
             <option value="正社員" {% if request.query_params.employment_type=='正社員' %}selected{% endif %}>正社員</option>
             <option value="契約社員" {% if request.query_params.employment_type=='契約社員' %}selected{% endif %}>契約社員</option>
@@ -45,7 +47,7 @@
             <option value="インターン" {% if request.query_params.employment_type=='インターン' %}selected{% endif %}>インターン</option>
         </select>
 
-        <select name="remote_type" style="flex:1 1 110px; min-width:110px; padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+        <select name="remote_type" class="form-select mb-2" style="min-width:110px;">
             <option value="">リモート勤務</option>
             <option value="未設定" {% if request.query_params.remote_type=='未設定' %}selected{% endif %}>未設定</option>
             <option value="フルリモート" {% if request.query_params.remote_type=='フルリモート' %}selected{% endif %}>フルリモート</option>
@@ -53,7 +55,7 @@
             <option value="出社" {% if request.query_params.remote_type=='出社' %}selected{% endif %}>出社</option>
         </select>
 
-        <select name="work_location" style="flex:1 1 140px; min-width:140px; padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+        <select name="work_location" class="form-select mb-2" style="min-width:140px;">
             <option value="">勤務地</option>
             {% set prefectures = [
                 '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県',
@@ -70,7 +72,7 @@
             {% endfor %}
         </select>
 
-        <select name="salary_min" style="width:120px; padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+        <select name="salary_min" class="form-select mb-2" style="width:120px;">
             <option value="">年収下限(万円)</option>
             <option value="300" {% if request.query_params.salary_min=='300' %}selected{% endif %}>300万円〜</option>
             <option value="400" {% if request.query_params.salary_min=='400' %}selected{% endif %}>400万円〜</option>
@@ -81,7 +83,7 @@
             <option value="900" {% if request.query_params.salary_min=='900' %}selected{% endif %}>900万円〜</option>
             <option value="1000" {% if request.query_params.salary_min=='1000' %}selected{% endif %}>1000万円〜</option>
         </select>
-        <select name="salary_max" style="width:120px; padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+        <select name="salary_max" class="form-select mb-2" style="width:120px;">
             <option value="">年収上限(万円)</option>
             <option value="400" {% if request.query_params.salary_max=='400' %}selected{% endif %}>〜400万円</option>
             <option value="500" {% if request.query_params.salary_max=='500' %}selected{% endif %}>〜500万円</option>
@@ -94,7 +96,7 @@
             <option value="2000" {% if request.query_params.salary_max=='2000' %}selected{% endif %}>〜2000万円</option>
         </select>
 
-        <select name="employee_count" style="flex:1 1 120px; min-width:120px; padding:0.5em; border-radius:6px; border:1px solid #ccc;">
+        <select name="employee_count" class="form-select mb-2" style="min-width:120px;">
             <option value="">従業員数</option>
             <option value="1-9" {% if request.query_params.employee_count=='1-9' %}selected{% endif %}>1-9人</option>
             <option value="10-49" {% if request.query_params.employee_count=='10-49' %}selected{% endif %}>10-49人</option>
@@ -105,7 +107,9 @@
             <option value="5000-" {% if request.query_params.employee_count=='5000-' %}selected{% endif %}>5000人以上</option>
         </select>
 
-        <button type="submit" class="job-link" style="padding:0.5em 1.2em; border-radius:6px; border:none; background:#0066cc; color:#fff; font-weight:600; cursor:pointer;">検索</button>
+        <button type="submit" class="btn btn-primary w-100 mt-2">検索</button>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     </form>
 
     {% if jobs|length == 0 %}
@@ -136,11 +140,11 @@
 
         <div class="pagination" style="margin:32px 0; text-align:center;">
             {% if prev_skip is not none and skip > 0 %}
-                <a href="?{{ prev_query }}" class="page-link">« 前へ</a>
+                <a href="?{{ prev_query }}" class="page-link">« Prev</a>
             {% endif %}
             <span style="margin:0 12px; font-weight:600; color:#0066cc;">{{ (skip // limit) + 1 }} / {{ ((total_count + limit - 1) // limit) }}</span>
             {% if next_skip is not none %}
-                <a href="?{{ next_query }}" class="page-link">次へ »</a>
+                <a href="?{{ next_query }}" class="page-link">Next »</a>
             {% endif %}
         </div>
     {% endif %}

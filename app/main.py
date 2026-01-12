@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI
 from fastapi import Request
 from fastapi.responses import HTMLResponse
@@ -18,7 +17,10 @@ templates = Jinja2Templates(directory="templates")
 def hello():
     return {"message": "Hello FastAPI"}
 
-
+# About page route
+@app.get("/about", response_class=HTMLResponse)
+def about(request: Request):
+    return templates.TemplateResponse("about.html", {"request": request})
 
 @app.get("/", response_class=HTMLResponse)
 def show_jobs(
