@@ -23,7 +23,7 @@ def hello():
 @app.get("/", response_class=HTMLResponse)
 def show_jobs(
     request: Request,
-    limit: int = 50,
+    limit: int = 20,
     q: Optional[str] = None,
     job_category: Optional[str] = None,
     employment_type: Optional[str] = None,
@@ -90,14 +90,37 @@ def show_jobs(
                 and_conditions.append({"employee_count": {"$gte": int(parts[0]), "$lte": int(parts[1])}})
     if and_conditions:
         query = {"$and": and_conditions}
-    cursor = collection.find(query).sort("_id", -1).limit(limit)
+    skip = int(request.query_params.get("skip", 0))
+    total_count = collection.count_documents(query)
+    cursor = collection.find(query).sort("_id", -1).skip(skip).limit(limit)
     jobs = []
     for doc in cursor:
         doc["_id"] = str(doc["_id"])
         jobs.append(doc)
+    prev_skip = max(skip - limit, 0)
+    next_skip = skip + limit if (skip + limit) < total_count else None
+
+    # クエリパラメータ（skip以外）をURLエンコード
+    from urllib.parse import urlencode
+    base_params = dict(request.query_params)
+    base_params.pop("skip", None)
+    base_query = urlencode(base_params)
+    prev_query = base_query + ("&" if base_query else "") + f"skip={prev_skip}"
+    next_query = base_query + ("&" if base_query else "") + f"skip={next_skip}" if next_skip is not None else None
+
     return templates.TemplateResponse(
         "jobs.html",
-        {"request": request, "jobs": jobs},
+        {
+            "request": request,
+            "jobs": jobs,
+            "skip": skip,
+            "limit": limit,
+            "total_count": total_count,
+            "prev_skip": prev_skip,
+            "next_skip": next_skip,
+            "prev_query": prev_query,
+            "next_query": next_query,
+        },
     )
 
 

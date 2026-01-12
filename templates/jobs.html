@@ -133,6 +133,16 @@
             </div>
             {% endfor %}
         </div>
+
+        <div class="pagination" style="margin:32px 0; text-align:center;">
+            {% if prev_skip is not none and skip > 0 %}
+                <a href="?{{ prev_query }}" class="page-link">« 前へ</a>
+            {% endif %}
+            <span style="margin:0 12px; font-weight:600; color:#0066cc;">{{ (skip // limit) + 1 }} / {{ ((total_count + limit - 1) // limit) }}</span>
+            {% if next_skip is not none %}
+                <a href="?{{ next_query }}" class="page-link">次へ »</a>
+            {% endif %}
+        </div>
     {% endif %}
 
 </body>
