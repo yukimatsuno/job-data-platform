@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.csv
+*.json
+*.jsonl
+data/
+.git/
+.env
+*.ipynb
+firebase-debug.log
+docs/

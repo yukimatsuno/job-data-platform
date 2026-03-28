@@ -8,3 +8,7 @@ data/
 # Jupyter notebook
 01_herp_scraper.ipynb
 
+__pycache__/
+.pytest_cache/
+
+firebase-debug.log
