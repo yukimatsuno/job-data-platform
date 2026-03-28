@@ -1,6 +1,8 @@
 fastapi
 uvicorn
-pymongo
-dnspython
 jinja2
 python-dotenv
+sqlalchemy
+psycopg2-binary
+pydantic
+pytest
