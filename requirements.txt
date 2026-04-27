@@ -2,6 +2,7 @@ fastapi
 uvicorn
 jinja2
 python-dotenv
+pymongo
 sqlalchemy
 psycopg2-binary
 pydantic
