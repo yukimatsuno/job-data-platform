@@ -20,7 +20,7 @@ def hello():
 # About page route
 @app.get("/about", response_class=HTMLResponse)
 def about(request: Request):
-    return templates.TemplateResponse("about.html", {"request": request})
+    return templates.TemplateResponse(request, "about.html")
 
 @app.get("/", response_class=HTMLResponse)
 def show_jobs(
@@ -111,9 +111,9 @@ def show_jobs(
     next_query = base_query + ("&" if base_query else "") + f"skip={next_skip}" if next_skip is not None else None
 
     return templates.TemplateResponse(
+        request,
         "jobs.html",
         {
-            "request": request,
             "jobs": jobs,
             "skip": skip,
             "limit": limit,
@@ -138,6 +138,7 @@ def show_job_detail(request: Request, job_id: str):
     doc["_id"] = str(doc["_id"])
 
     return templates.TemplateResponse(
+        request,
         "job_detail.html",
-        {"request": request, "job": doc},
+        {"job": doc},
     )
